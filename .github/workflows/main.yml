@@ -14,4 +14,4 @@ jobs:
     - name: Launch instance
       run: |
         lxc image list images:
-        lxc launch images:amazonlinux/2 amazon
+
