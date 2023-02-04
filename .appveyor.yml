@@ -5,8 +5,8 @@ environment:
 init:
 - sh: curl -sflL https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-ssh.sh | bash -e -
 on_failure:
-- echo Sleeping to allow debug
-- sleep 60m
+#- echo Sleeping to allow debug
+#- sleep 60m
 install:
 - sudo apt-get update >/dev/null
 - sudo apt-get -y install lxc debootstrap squashfs-tools awscli >/dev/null
