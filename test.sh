@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-sudo touch /etc/resolv.conf
+touch /etc/resolv.conf
 echo nameserver 8.8.8.8 | sudo tee /etc/resolv.conf
 
 yum -y install iputils
