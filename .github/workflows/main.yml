@@ -34,4 +34,3 @@ jobs:
         ps aux | grep dnsmasq
         ip addr
         lxc exec c1 -- sudo bash -x /tmp/test.sh
-        
