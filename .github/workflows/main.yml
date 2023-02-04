@@ -11,6 +11,9 @@ jobs:
     - uses: whywaita/setup-lxd@v1
       with:
         lxd_version: latest/stable
+    - name: lxc init
+      run: |
+        lxd init --auto
     - name: Install distrobuilder
       run: |
         sudo snap install distrobuilder --classic
