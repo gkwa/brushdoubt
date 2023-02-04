@@ -13,4 +13,4 @@ jobs:
         lxd_version: latest/stable
     - name: Launch instance
       run: |
-        lxc launch amazonlinux build-server
+        lxc launch images:rockylinux/8 rocky
