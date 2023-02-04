@@ -11,6 +11,11 @@ jobs:
     - uses: whywaita/setup-lxd@v1
       with:
         lxd_version: latest/stable
+    - name: Enable network resolution in container
+      run: |
+        sudo ufw status
+        sudo ufw disable
+        sudo ufw status
     - name: lxc init
       run: |
         lxd init --auto
