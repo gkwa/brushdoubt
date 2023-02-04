@@ -23,6 +23,3 @@ install:
 - time lxc launch my-local-image my-container
 - lxc exec my-container -- timeout 2m bash -c 'echo waiting for newtork; until ping -c 1 google.com &>/dev/null; do sleep 1; done'
 - lxc list
-
-curl -LO https://raw.githubusercontent.com/lxc/lxc-ci/master/images/amazonlinux.yaml
-
