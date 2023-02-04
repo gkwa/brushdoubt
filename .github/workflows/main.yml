@@ -13,7 +13,7 @@ jobs:
         lxd_version: latest/stable
     - name: Launch instance
       run: |
-        snap install distrobuilder --classic
+        sudo snap install distrobuilder --classic
         distrobuilder --version
         curl -LO https://raw.githubusercontent.com/lxc/lxc-ci/master/images/amazonlinux.yaml
         sudo distrobuilder build-lxd amazonlinux.yaml -o image.release=2.0.20220606.1
