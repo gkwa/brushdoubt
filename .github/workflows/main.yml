@@ -14,4 +14,4 @@ jobs:
     - name: Launch instance
       run: |
         lxc image list images:
-
+        distrobuilder --version
