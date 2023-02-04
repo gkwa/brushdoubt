@@ -22,10 +22,11 @@ jobs:
         du -shc lxd.tar.xz rootfs.squashfs
         lxc image import lxd.tar.xz rootfs.squashfs --alias amazon
         lxc image list
-    - name: Launch lxc container
+    - name: Launch container
       run: |
         lxc launch amazon c1
-    - name: Install stuff
+    - name: Test
       run: |
         lxc file push test.sh c1/tmp/
         lxc exec c1 -- sudo bash -x /tmp/test.sh
+        
