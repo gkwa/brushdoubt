@@ -29,6 +29,8 @@ jobs:
       run: |
         lxc launch amazon c1
         lxc info
+        lxc network list
+        lxc config show
     - name: Test
       run: |
         lxc file push test.sh c1/tmp/
