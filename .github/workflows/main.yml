@@ -11,34 +11,18 @@ jobs:
     - uses: whywaita/setup-lxd@v1
       with:
         lxd_version: latest/stable
-    - name: Enable network resolution in container
-      run: |
-        sudo ufw status
-        sudo ufw disable
-        sudo ufw status
-    - name: lxc init
-      run: |
-        lxd init --auto
     - name: Install distrobuilder
       run: |
         sudo snap install distrobuilder --classic
+        sudo apt-get -y install lxc debootstrap squashfs-tools awscli >/dev/null
         distrobuilder --version
-    - name: Import container
+    - name: Flail aimlessly
       run: |
-        curl -LO https://raw.githubusercontent.com/lxc/lxc-ci/master/images/amazonlinux.yaml
-        sudo distrobuilder build-lxd amazonlinux.yaml -o image.release=2.0.20220606.1
-        du -shc lxd.tar.xz rootfs.squashfs
-        lxc image import lxd.tar.xz rootfs.squashfs --alias amazon
+        sudo distrobuilder build-lxd ubuntu.yaml -o image.architecture=amd64 -o image.release=focal
+        mkdir -p /tmp/s3/
+        cp lxd.tar.xz rootfs.squashfs /tmp/s3/
+        lxd init --auto
+        lxc image import lxd.tar.xz rootfs.squashfs --alias local-image-sls
         lxc image list
-    - name: Launch container
-      run: |
-        lxc launch amazon c1
-        lxc info
-        lxc network list
-        lxc config show
-    - name: Test
-      run: |
-        lxc file push test.sh c1/tmp/
-        ps aux | grep dnsmasq
-        ip addr
-        lxc exec c1 -- sudo bash -x /tmp/test.sh
+        time lxc launch local-image-sls csls
+        lxc exec csls -- bash -c 'echo waiting for newtork; until ping -c 1 google.com &>/dev/null; do sleep 1; done'
