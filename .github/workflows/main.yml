@@ -13,4 +13,5 @@ jobs:
         lxd_version: latest/stable
     - name: Launch instance
       run: |
-        distrobuilder --version
+        curl -LO https://raw.githubusercontent.com/lxc/lxc-ci/master/images/amazonlinux.yaml
+        distrobuilder build-lxd amazonlinux.yaml -o image.release=2.0.20220606.1
