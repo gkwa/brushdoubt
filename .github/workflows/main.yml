@@ -18,7 +18,7 @@ jobs:
         distrobuilder --version
     - name: Launch container
       run: |
-        sudo distrobuilder build-lxd ubuntu.yaml -o image.architecture=amd64 -o image.release=focal
+        sudo distrobuilder build-lxd amazonlinux.yaml -o image.architecture=amd64 -o image.release=focal
         lxd init --auto
         lxc image import lxd.tar.xz rootfs.squashfs --alias my-local-image
         lxc image list
