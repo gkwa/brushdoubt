@@ -28,5 +28,6 @@ jobs:
     - name: Test
       run: |
         lxc file push test.sh c1/tmp/
+        ps aux | grep dnsmasq
         lxc exec c1 -- sudo bash -x /tmp/test.sh
         
