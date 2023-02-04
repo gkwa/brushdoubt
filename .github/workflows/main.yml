@@ -8,6 +8,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+    - name: Install stuff
+      run: |
+        pwd
     - uses: whywaita/setup-lxd@v1
       with:
         lxd_version: latest/stable
