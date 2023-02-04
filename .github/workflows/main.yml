@@ -25,3 +25,7 @@ jobs:
     - name: Launch lxc container
       run: |
         lxc launch amazon c1
+        lxc exec c1 -- sudo bash yum -y install tar gzip curl
+    - name: Install stuff
+      run: |
+        lxc exec c1 -- sudo curl --create-dirs -sSo /opt/sbx/InstallSbxCDI.tgz https://streambox-cdi.s3-us-west-2.amazonaws.com/main/linux/InstallSbxCDI.tgz
