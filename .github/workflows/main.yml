@@ -28,4 +28,6 @@ jobs:
     - name: Install stuff
       run: |
         pwd
+        ls -la
+        find . -type f
         lxc exec c1 -- sudo bash -x ../test.sh
