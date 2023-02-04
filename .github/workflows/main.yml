@@ -8,9 +8,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: Install stuff
-      run: |
-        pwd
     - uses: whywaita/setup-lxd@v1
       with:
         lxd_version: latest/stable
@@ -30,4 +27,5 @@ jobs:
         lxc launch amazon c1
     - name: Install stuff
       run: |
+        pwd
         lxc exec c1 -- sudo bash -x ../test.sh
