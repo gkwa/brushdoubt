@@ -17,3 +17,7 @@ jobs:
         distrobuilder --version
         curl -LO https://raw.githubusercontent.com/lxc/lxc-ci/master/images/amazonlinux.yaml
         sudo distrobuilder build-lxd amazonlinux.yaml -o image.release=2.0.20220606.1
+        du -shc lxd.tar.xz rootfs.squashfs
+        lxc image import lxd.tar.xz rootfs.squashfs --alias amazon
+        lxc image list
+        lxc launch amazon c1
