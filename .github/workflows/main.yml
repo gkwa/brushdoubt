@@ -13,4 +13,4 @@ jobs:
         lxd_version: latest/stable
     - name: Launch instance
       run: |
-        lxc launch images:amazonlinux amazon
+        lxc launch images:amazonlinux/2 amazon
