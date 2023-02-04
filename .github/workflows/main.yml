@@ -30,4 +30,4 @@ jobs:
         lxc launch amazon c1
     - name: Install stuff
       run: |
-        lxc exec c1 -- sudo bash -x test.sh
+        lxc exec c1 -- sudo bash -x ../test.sh
