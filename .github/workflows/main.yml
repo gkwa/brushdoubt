@@ -13,5 +13,4 @@ jobs:
         lxd_version: latest/stable
     - name: Launch instance
       run: |
-        lxc image list images:
         distrobuilder --version
