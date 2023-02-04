@@ -19,10 +19,8 @@ jobs:
     - name: Flail aimlessly
       run: |
         sudo distrobuilder build-lxd ubuntu.yaml -o image.architecture=amd64 -o image.release=focal
-        mkdir -p /tmp/s3/
-        cp lxd.tar.xz rootfs.squashfs /tmp/s3/
         lxd init --auto
-        lxc image import lxd.tar.xz rootfs.squashfs --alias local-image-sls
+        lxc image import lxd.tar.xz rootfs.squashfs --alias my-local-image
         lxc image list
-        time lxc launch local-image-sls csls
-        lxc exec csls -- bash -c 'echo waiting for newtork; until ping -c 1 google.com &>/dev/null; do sleep 1; done'
+        time lxc launch my-local-image mycontainer
+        lxc exec mycontainer -- bash -c 'echo waiting for newtork; until ping -c 1 google.com &>/dev/null; do sleep 1; done'
