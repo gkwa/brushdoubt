@@ -1,0 +1,16 @@
+name: CI
+"on":
+  push: null
+  schedule:
+  - cron: 01 13 * * SAT
+jobs:
+  buildx:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: whywaita/setup-lxd@v1
+        with:
+          lxd_version: latest/stable
+      - name: Launch instance
+        run: |
+          lxc launch ubuntu:focal build-server
