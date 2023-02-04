@@ -28,6 +28,7 @@ jobs:
     - name: Launch container
       run: |
         lxc launch amazon c1
+        lxc info
     - name: Test
       run: |
         lxc file push test.sh c1/tmp/
