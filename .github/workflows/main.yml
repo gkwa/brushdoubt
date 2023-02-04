@@ -25,4 +25,4 @@ jobs:
         time lxc launch my-local-image mycontainer
     - name: Waiting for network
       run: |
-        lxc exec mycontainer -- bash -c 'echo waiting for newtork; until ping -c 1 google.com &>/dev/null; do sleep 1; done'
+        lxc exec mycontainer -- timeout 2m bash -c 'echo waiting for newtork; until ping -c 1 google.com &>/dev/null; do sleep 1; done'
