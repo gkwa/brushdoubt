@@ -33,10 +33,10 @@ install:
 - lxc image list
 - rm -f lxd.tar.xz rootfs.squashfs
 
-- time lxc launch local-ubuntu-image c-ubuntu
+- time sudo lxc launch local-ubuntu-image c-ubuntu
 - lxc exec c-ubuntu -- timeout 2m bash -c 'echo waiting for newtork; until ping -c 1 google.com &>/dev/null; do sleep 1; done'
 - lxc list
 
-- time lxc launch local-amazon-image c-amazon
+- time sudo lxc launch local-amazon-image c-amazon
 - lxc exec c-amazon -- timeout 2m bash -c 'echo waiting for newtork; until ping -c 1 google.com &>/dev/null; do sleep 1; done'
 - lxc list
