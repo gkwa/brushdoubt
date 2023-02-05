@@ -40,9 +40,8 @@ install:
 - ping -c 1 google.com
 - lxc launch $IMAGE_NAME $CONTAINER_NAME
 - lxc exec $CONTAINER_NAME -- /bin/sh -c 'ls /tmp'
-- lxc exec $CONTAINER_NAME -- /bin/sh -c 'apk add iputils'
+- lxc exec $CONTAINER_NAME -- /bin/sh -c 'apk add --update bind-tools iputils'
 - lxc exec $CONTAINER_NAME -- /bin/sh -c 'cat /etc/resolv.conf'
 - lxc exec $CONTAINER_NAME -- /bin/sh -c 'ping -c 1 google.com'
-- lxc exec $CONTAINER_NAME -- /bin/sh -c 'apk add --update bind-tools'
 - lxc exec $CONTAINER_NAME -- /bin/sh -c 'dig -t A google.com 8.8.8.8'
 - lxc exec $CONTAINER_NAME -- timeout 2m bash -c 'echo waiting for newtork; until ping -c 1 google.com &>/dev/null; do sleep 1; done'
