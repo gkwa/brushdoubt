@@ -38,6 +38,7 @@ install:
 - lxc image list
 - sudo cat /etc/resolv.conf
 - ping -c 1 google.com
+- time sudo lxc launch $IMAGE_NAME $CONTAINER_NAME
 - lxc exec $CONTAINER_NAME -- sudo cat /etc/resolv.conf
 - lxc exec $CONTAINER_NAME -- ping -c 1 google.com
 - lxc exec $CONTAINER_NAME -- dig -t A google.com 8.8.8.8
