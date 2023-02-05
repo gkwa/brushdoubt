@@ -41,7 +41,6 @@ install:
 - cat /etc/network/interfaces
 - lxc exec $CONTAINER_NAME -- cat /etc/resolv.conf
 - lxc exec $CONTAINER_NAME -- ping -c 1 google.com
-- lxc exec $CONTAINER_NAME -- cat /etc/network/interfaces
 - lxc exec $CONTAINER_NAME -- systemctl restart systemd-resolved
 - lxc exec $CONTAINER_NAME -- systemctl systemd-resolve --status
 - lxc exec $CONTAINER_NAME -- dig -t A google.com 8.8.8.8
