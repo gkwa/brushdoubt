@@ -36,12 +36,11 @@ install:
 - sudo distrobuilder build-lxd $DISTRO_FILE -o image.architecture=$ARCH -o image.release=$RELEASE
 - lxc image import lxd.tar.xz rootfs.squashfs --alias $IMAGE_NAME
 - lxc image list
-- cat /etc/resolv.conf
+- sudo cat /etc/resolv.conf
 - ping -c 1 google.com
-- cat /etc/network/interfaces
-- lxc exec $CONTAINER_NAME -- cat /etc/resolv.conf
+- lxc exec $CONTAINER_NAME -- sudo cat /etc/resolv.conf
 - lxc exec $CONTAINER_NAME -- ping -c 1 google.com
 - lxc exec $CONTAINER_NAME -- dig -t A google.com 8.8.8.8
-- lxc exec $CONTAINER_NAME -- systemctl restart systemd-resolved
-- lxc exec $CONTAINER_NAME -- systemctl systemd-resolve --status
+- lxc exec $CONTAINER_NAME -- sudo systemctl restart systemd-resolved
+- lxc exec $CONTAINER_NAME -- sudo systemctl systemd-resolve --status
 - lxc exec $CONTAINER_NAME -- timeout 2m bash -c 'echo waiting for newtork; until ping -c 1 google.com &>/dev/null; do sleep 1; done'
