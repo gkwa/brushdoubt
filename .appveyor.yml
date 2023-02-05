@@ -4,16 +4,14 @@ environment:
   APPVEYOR_SSH_KEY: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFp48yQviDu3U2mGdwv7CO3O84IAj4LJUXzyGbs6mT0q taylor
 init:
 - sh: curl -sflL https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-ssh.sh | bash -e -
-on_failure:
-#- echo Sleeping to allow debug
-#- sleep 60m
 install:
 - sudo apt-get update >/dev/null
 - sudo apt-get -y install lxc debootstrap squashfs-tools awscli >/dev/null
-- lxc image list # local images
-- lxc image list images: # public images
+- lxc image list
+- lxc image list images: null
 - sudo snap install distrobuilder --classic >/dev/null
-- REL=$(curl -sI https://cdn.amazonlinux.com/os-images/latest/ | sed -En 's/location:.*os-images\/([^\/]+)\/.*/\1/p')
+- |
+  REL=$(curl -sI https://cdn.amazonlinux.com/os-images/latest/ | sed -En 's/location:.*os-images\/([^\/]+)\/.*/\1/p')
     && echo $REL
     && sudo distrobuilder build-lxd amazonlinux.yaml -o image.release=$REL
 - lxd init --auto
