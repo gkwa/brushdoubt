@@ -10,9 +10,12 @@ on_failure:
 install:
 - sudo apt-get update >/dev/null
 - sudo apt-get -y install lxc debootstrap squashfs-tools awscli >/dev/null
+- lxc image list # local images
+- lxc image list images: # public images
 - sudo snap install distrobuilder --classic >/dev/null
 - sudo distrobuilder build-lxd amazonlinux.yaml -o image.release=2.0.20220606.1
 - lxd init --auto
+- lxd init --dump
 - lxc image import lxd.tar.xz rootfs.squashfs --alias my-local-image
 - lxc image list
 - time lxc launch my-local-image my-container
