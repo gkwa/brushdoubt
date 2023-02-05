@@ -11,18 +11,21 @@ environment:
     CONTAINER_NAME: alpine
     ARCH: x86_64
     RELEASE: 3.17
+    IMAGE_VARIANT: cloud
   - DISTRO: ubuntu
     DISTRO_FILE: image-ubuntu.yaml
     IMAGE_NAME: local-ubuntu-image
     CONTAINER_NAME: ubuntu
     ARCH: amd64
     RELEASE: focal
+    IMAGE_VARIANT: 
   - DISTRO: amazonlinux
     DISTRO_FILE: image-amazonlinux.yaml
     IMAGE_NAME: local-amazon-image
     CONTAINER_NAME: amazon
     ARCH: x86_64
     RELEASE: 2.0.20220606.1
+    IMAGE_VARIANT: 
 matrix:
   fast_finish: true
 install:
@@ -33,7 +36,7 @@ install:
 - lxd init --dump
 - echo DISTRO=$DISTRO CONTAINER_NAME=$CONTAINER_NAME DISTRO_FILE=$DISTRO_FILE ARCH=$ARCH
 - rm -f lxd.tar.xz rootfs.squashfs
-- sudo distrobuilder build-lxd $DISTRO_FILE -o image.architecture=$ARCH -o image.release=$RELEASE
+- sudo distrobuilder build-lxd $DISTRO_FILE -o image.architecture=$ARCH -o image.release=$RELEASE -o image.variant=$IMAGE_VARIANT
 - lxc image import lxd.tar.xz rootfs.squashfs --alias $IMAGE_NAME
 - lxc image list
 - cat /etc/resolv.conf
