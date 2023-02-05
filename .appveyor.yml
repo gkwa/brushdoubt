@@ -23,10 +23,10 @@ install:
 - rm -f lxd.tar.xz rootfs.squashfs
 
 - rm -f lxd.tar.xz rootfs.squashfs
-- >
-  REL=$(curl -sI https://cdn.amazonlinux.com/os-images/latest/ | sed -En 's/location:.*os-images\/([^\/]+)\/.*/\1/p')
-    && echo $REL
-    && sudo distrobuilder build-lxd amazonlinux.yaml -o image.release=$REL
+- |
+    REL=$(curl -sI https://cdn.amazonlinux.com/os-images/latest/ | sed -En 's/location:.*os-images\/([^\/]+)\/.*/\1/p')
+    echo $REL
+    sudo distrobuilder build-lxd amazonlinux.yaml -o image.release=$REL
 - lxc image import lxd.tar.xz rootfs.squashfs --alias local-amazon-image1
 - rm -f lxd.tar.xz rootfs.squashfs
 
