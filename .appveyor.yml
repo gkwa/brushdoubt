@@ -6,10 +6,8 @@ init:
 - sh: curl -sflL https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-ssh.sh | bash -e -
 install:
 - sudo apt-get update >/dev/null
-- sudo apt-get -y install lxc debootstrap squashfs-tools awscli >/dev/null
-- lxc image list
-- lxc image list images: null
 - sudo snap install distrobuilder --classic >/dev/null
+- sudo apt-get -y install lxc debootstrap squashfs-tools awscli >/dev/null
 - lxd init --auto
 - lxd init --dump
 - curl -LO https://us.lxd.images.canonical.com/images/amazonlinux/current/amd64/default/20230205_05:09/lxd.tar.xz
