@@ -33,12 +33,6 @@ install:
 - lxc image list
 - rm -f lxd.tar.xz rootfs.squashfs
 
-- curl -LO https://us.lxd.images.canonical.com/images/amazonlinux/current/amd64/default/20230205_05:09/lxd.tar.xz
-- curl -LO https://us.lxd.images.canonical.com/images/amazonlinux/current/amd64/default/20230205_05:09/rootfs.squashfs
-- lxc image import lxd.tar.xz rootfs.squashfs --alias local-amazon-image2
-- lxc image list
-- rm -f lxd.tar.xz rootfs.squashfs
-
 - time lxc launch local-ubuntu-image c-ubuntu
 - lxc exec c-ubuntu -- timeout 2m bash -c 'echo waiting for newtork; until ping -c 1 google.com &>/dev/null; do sleep 1; done'
 - lxc list
