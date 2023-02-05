@@ -24,7 +24,7 @@ environment:
     ARCH: aarch64
     RELEASE: 3.17
 matrix:
-  fast_finish: false
+  fast_finish: true
 install:
 - sudo apt-get update >/dev/null
 - sudo snap install distrobuilder --classic >/dev/null
