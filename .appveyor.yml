@@ -9,7 +9,7 @@ environment:
     DISTRO_FILE: alpine.yaml
     IMAGE_NAME: local-alpine-image
     CONTAINER_NAME: alpine
-    ARCH: linux64
+    ARCH=x86_64
     RELEASE: 3.17
   - DISTRO: ubuntu
     DISTRO_FILE: image-ubuntu.yaml
