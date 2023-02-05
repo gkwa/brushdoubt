@@ -38,7 +38,7 @@ install:
 - lxc image list
 - sudo cat /etc/resolv.conf
 - ping -c 1 google.com
-- time sudo lxc launch $IMAGE_NAME $CONTAINER_NAME
+- lxc launch $IMAGE_NAME $CONTAINER_NAME
 - lxc exec $CONTAINER_NAME -- sudo apk add iputils
 - lxc exec $CONTAINER_NAME -- apk add iputils
 - lxc exec $CONTAINER_NAME -- cat /etc/resolv.conf
