@@ -5,14 +5,14 @@ init:
 environment:
   APPVEYOR_SSH_KEY: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFp48yQviDu3U2mGdwv7CO3O84IAj4LJUXzyGbs6mT0q taylor
   matrix:
-  - DISTRO: amazonlinux
-    DISTRO_FILE: image-amazonlinux.yaml
-    IMAGE_NAME: local-amazon-image
-    CONTAINER_NAME: amazon
   - DISTRO: ubuntu
     DISTRO_FILE: image-ubuntu.yaml
     IMAGE_NAME: local-ubuntu-image
     CONTAINER_NAME: ubuntu
+  - DISTRO: amazonlinux
+    DISTRO_FILE: image-amazonlinux.yaml
+    IMAGE_NAME: local-amazon-image
+    CONTAINER_NAME: amazon
   - DISTRO: alpine
     DISTRO_FILE: image-alpine.yaml
     IMAGE_NAME: local-alpine-image
@@ -30,7 +30,9 @@ install:
 - sudo distrobuilder build-lxd $DISTRO_FILE -o image.architecture=amd64 -o image.release=focal
 - lxc image import lxd.tar.xz rootfs.squashfs --alias $IMAGE_NAME
 - lxc image list
+- cat /etc/resolv.conf
 - cat /etc/network/interfaces
+- lxc exec $CONTAINER_NAME -- cat /etc/resolv.conf
 - lxc exec $CONTAINER_NAME -- cat /etc/network/interfaces
 - lxc exec $CONTAINER_NAME -- systemctl restart systemd-resolved
 - lxc exec $CONTAINER_NAME -- systemctl systemd-resolve --status
