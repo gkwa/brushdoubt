@@ -12,10 +12,12 @@ install:
 - sudo snap install distrobuilder --classic >/dev/null
 - lxd init --auto
 - lxd init --dump
-- |
-  REL=$(curl -sI https://cdn.amazonlinux.com/os-images/latest/ | sed -En 's/location:.*os-images\/([^\/]+)\/.*/\1/p')
-    && echo $REL
-    && sudo distrobuilder build-lxd amazonlinux.yaml -o image.release=$REL
+- curl -LO https://us.lxd.images.canonical.com/images/amazonlinux/current/amd64/default/20230205_05:09/lxd.tar.xz
+- curl -LO https://us.lxd.images.canonical.com/images/amazonlinux/current/amd64/default/20230205_05:09/rootfs.squashfs
+#- |
+#  REL=$(curl -sI https://cdn.amazonlinux.com/os-images/latest/ | sed -En 's/location:.*os-images\/([^\/]+)\/.*/\1/p')
+#    && echo $REL
+#    && sudo distrobuilder build-lxd amazonlinux.yaml -o image.release=$REL
 - lxc image import lxd.tar.xz rootfs.squashfs --alias my-local-image
 - lxc image list
 - time lxc launch my-local-image my-container
