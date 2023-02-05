@@ -14,12 +14,14 @@ install:
 - rm -f lxd.tar.xz rootfs.squashfs
 - sudo distrobuilder build-lxd ubuntu.yaml -o image.architecture=amd64 -o image.release=focal
 - lxc image import lxd.tar.xz rootfs.squashfs --alias local-ubuntu-image
+- lxc image list
 - rm -f lxd.tar.xz rootfs.squashfs
 
 - rm -f lxd.tar.xz rootfs.squashfs
 - curl -LO https://us.lxd.images.canonical.com/images/amazonlinux/current/amd64/default/20230205_05:09/lxd.tar.xz
 - curl -LO https://us.lxd.images.canonical.com/images/amazonlinux/current/amd64/default/20230205_05:09/rootfs.squashfs
 - lxc image import lxd.tar.xz rootfs.squashfs --alias local-amazon-image
+- lxc image list
 - rm -f lxd.tar.xz rootfs.squashfs
 
 - rm -f lxd.tar.xz rootfs.squashfs
@@ -28,14 +30,14 @@ install:
     echo $REL
     sudo distrobuilder build-lxd amazonlinux.yaml -o image.release=$REL
 - lxc image import lxd.tar.xz rootfs.squashfs --alias local-amazon-image1
+- lxc image list
 - rm -f lxd.tar.xz rootfs.squashfs
 
 - curl -LO https://us.lxd.images.canonical.com/images/amazonlinux/current/amd64/default/20230205_05:09/lxd.tar.xz
 - curl -LO https://us.lxd.images.canonical.com/images/amazonlinux/current/amd64/default/20230205_05:09/rootfs.squashfs
 - lxc image import lxd.tar.xz rootfs.squashfs --alias local-amazon-image2
-- rm -f lxd.tar.xz rootfs.squashfs
-
 - lxc image list
+- rm -f lxd.tar.xz rootfs.squashfs
 
 - time lxc launch local-ubuntu-image c-ubuntu
 - lxc exec c-ubuntu -- timeout 2m bash -c 'echo waiting for newtork; until ping -c 1 google.com &>/dev/null; do sleep 1; done'
