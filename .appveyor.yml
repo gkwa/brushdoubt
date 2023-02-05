@@ -8,12 +8,15 @@ environment:
   - DISTRO: ubuntu
     DISTRO_FILE: image-ubuntu.yaml
     IMAGE_NAME: local-ubuntu-image
+    CONTAINER_NAME: ubuntu
   - DISTRO: amazonlinux
     DISTRO_FILE: image-amazonlinux.yaml
     IMAGE_NAME: local-amazon-image
+    CONTAINER_NAME: amazon
   - DISTRO: alpine
     DISTRO_FILE: image-alpine.yaml
     IMAGE_NAME: local-alpine-image
+    CONTAINER_NAME: alpine
 matrix:
   fast_finish: false
 install:
@@ -22,8 +25,11 @@ install:
 - sudo apt-get -y install lxc debootstrap squashfs-tools awscli >/dev/null
 - lxd init --auto
 - lxd init --dump
+- echo DISTRO=$DISTRO CONTAINER_NAME=$CONTAINER_NAME DISTRO_FILE=$DISTRO_FILE
 - rm -f lxd.tar.xz rootfs.squashfs
-- echo $DISTRO
 - sudo distrobuilder build-lxd $DISTRO_FILE -o image.architecture=amd64 -o image.release=focal
 - lxc image import lxd.tar.xz rootfs.squashfs --alias $IMAGE_NAME
 - lxc image list
+- lxc exec $CONTAINER_NAME -- systemctl restart systemd-resolved
+- lxc exec $CONTAINER_NAME -- systemctl systemd-resolve --status
+- lxc exec $CONTAINER_NAME -- timeout 2m bash -c 'echo waiting for newtork; until ping -c 1 google.com &>/dev/null; do sleep 1; done'
