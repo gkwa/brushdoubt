@@ -39,8 +39,8 @@ install:
 - sudo cat /etc/resolv.conf
 - ping -c 1 google.com
 - lxc launch $IMAGE_NAME $CONTAINER_NAME
-- lxc exec $CONTAINER_NAME -- /bin/sh -c ls 
-- lxc exec $CONTAINER_NAME -- sudo apk add iputils
+- lxc exec $CONTAINER_NAME -- /bin/sh -c 'ls /tmp'
+- lxc exec $CONTAINER_NAME -- /bin/sh -c 'sudo apk add iputils'
 - lxc exec $CONTAINER_NAME -- apk add iputils
 - lxc exec $CONTAINER_NAME -- cat /etc/resolv.conf
 - lxc exec $CONTAINER_NAME -- ping -c 1 google.com
