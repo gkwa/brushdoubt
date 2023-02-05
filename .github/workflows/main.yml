@@ -13,13 +13,16 @@ jobs:
         lxd_version: latest/stable
     - name: Install distrobuilder
       run: |
-        sudo snap install distrobuilder --classic
         sudo apt-get -y install lxc debootstrap squashfs-tools awscli >/dev/null
+        sudo snap install distrobuilder --classic
         distrobuilder --version
+        lxc image list # local images
+        lxc image list images: # public images
     - name: Launch container
       run: |
         sudo distrobuilder build-lxd amazonlinux.yaml -o image.architecture=amd64 -o image.release=focal
         lxd init --auto
+        lxd init --dump
         lxc image import lxd.tar.xz rootfs.squashfs --alias my-local-image
         lxc image list
         time lxc launch my-local-image mycontainer
