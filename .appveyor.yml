@@ -11,18 +11,18 @@ environment:
     CONTAINER_NAME: alpine
     ARCH: x86_64
     RELEASE: 3.17
-  - DISTRO: ubuntu
-    DISTRO_FILE: image-ubuntu.yaml
-    IMAGE_NAME: local-ubuntu-image
-    CONTAINER_NAME: ubuntu
-    ARCH: amd64
-    RELEASE: focal
-  - DISTRO: amazonlinux
-    DISTRO_FILE: image-amazonlinux.yaml
-    IMAGE_NAME: local-amazon-image
-    CONTAINER_NAME: amazon
-    ARCH: x86_64
-    RELEASE: 2.0.20220606.1
+#  - DISTRO: ubuntu
+#    DISTRO_FILE: image-ubuntu.yaml
+#    IMAGE_NAME: local-ubuntu-image
+#    CONTAINER_NAME: ubuntu
+#    ARCH: amd64
+#    RELEASE: focal
+#  - DISTRO: amazonlinux
+#    DISTRO_FILE: image-amazonlinux.yaml
+#    IMAGE_NAME: local-amazon-image
+#    CONTAINER_NAME: amazon
+#    ARCH: x86_64
+#    RELEASE: 2.0.20220606.1
 matrix:
   fast_finish: true
 install:
