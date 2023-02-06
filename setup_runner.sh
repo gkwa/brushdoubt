@@ -21,7 +21,7 @@ lxc image list
 #lxc image list images: 
 lxc profile show default
 
-# fixme why does this fail?
+# fixme why does this fail on github actions?
 # ping -c 1 github.com
 
 sudo cat /etc/resolv.conf
