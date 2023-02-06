@@ -59,4 +59,4 @@ jobs:
         lxc exec $CONTAINER_NAME -- /bin/sh -x /tmp/$TEST_FILE
         lxc exec $CONTAINER_NAME -- /bin/sh -c 'ping -c 1 google.com'
         lxc exec $CONTAINER_NAME -- /bin/sh -c 'dig -t A google.com 8.8.8.8'
-        lxc exec $CONTAINER_NAME -- timeout 2m /bin/sh -c 'echo waiting for newtork; until ping -c 1 google.com &>/dev/null; do sleep 1; done'
+        lxc exec $CONTAINER_NAME -- timeout 2m /bin/sh -c 'echo waiting for network; until ping -c 1 google.com &>/dev/null; do sleep 1; done'
