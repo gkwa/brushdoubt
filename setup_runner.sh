@@ -5,7 +5,7 @@ set -e
 set -u
 
 apt-get update >/dev/null
-snap install distrobuilder --classic >/dev/null
+snap install distrobuilder --classic
 apt-get -y install lxc debootstrap squashfs-tools awscli >/dev/null
 
 lxd init --auto
