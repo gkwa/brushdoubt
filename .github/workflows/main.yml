@@ -29,7 +29,6 @@ jobs:
         sudo lxc image import lxd.tar.xz rootfs.squashfs --alias $IMAGE_NAME
         sudo lxc image list
         sudo cat /etc/resolv.conf
-        sudo ping -c 1 google.com
 
     - name: Launch container
       run: |
@@ -39,7 +38,6 @@ jobs:
         host_ip=$(lxd init --dump | grep ipv4.address | head -1 | cut -d: -f2 | tr -d ' ' | awk -F/ '{print $1}')
         echo $host_ip
         sudo lxc exec $CONTAINER_NAME -- /bin/sh -c 'echo nameserver '8.8.8.8' >>/etc/resolv.conf'
-
         sudo lxc exec $CONTAINER_NAME -- /bin/sh -c 'cat /etc/resolv.conf || true'
 
     - name: Waiting for network
