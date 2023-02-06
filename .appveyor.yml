@@ -58,4 +58,3 @@ install:
 - lxc exec $CONTAINER_NAME -- /bin/sh -c 'dig -t A google.com 8.8.8.8'
 - lxc exec $CONTAINER_NAME -- timeout 2m /bin/sh -c 'echo waiting for newtork; until ping -c 1 google.com &>/dev/null; do sleep 1; done'
 - lxc exec $CONTAINER_NAME -- /bin/sh -c 'curl -fsSL https://streambox-cdi.s3-us-west-2.amazonaws.com/aws/install.sh | sudo bash -x -s -- -b next-latest'
-
