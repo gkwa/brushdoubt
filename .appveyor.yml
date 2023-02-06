@@ -10,7 +10,7 @@ environment:
     IMAGE_NAME: local-amazon-image
     CONTAINER_NAME: amazon
     ARCH: x86_64
-    RELEASE: 2.0.20220606.1
+    RELEASE: 2.0.20230119.1
     TEST_FILE: amazonlinux.sh
   - DISTRO: ubuntu
     DISTRO_FILE: image-ubuntu.yaml

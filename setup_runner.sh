@@ -17,7 +17,7 @@ distrobuilder --version
 lxc image list 
 
 # public images
-lxc image list images: 
+#lxc image list images: 
 lxc profile show default
 
 ping -c 1 google.com
