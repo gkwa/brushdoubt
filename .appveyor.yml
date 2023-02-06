@@ -5,6 +5,13 @@ init:
 environment:
   APPVEYOR_SSH_KEY: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFp48yQviDu3U2mGdwv7CO3O84IAj4LJUXzyGbs6mT0q taylor
   matrix:
+  - DISTRO: amazonlinux
+    DISTRO_FILE: image-amazonlinux.yaml
+    IMAGE_NAME: local-amazon-image
+    CONTAINER_NAME: amazon
+    ARCH: x86_64
+    RELEASE: 2.0.20220606.1
+    TEST_FILE: amazonlinux.sh
   - DISTRO: alpinelinux
     DISTRO_FILE: alpine.yaml
     IMAGE_NAME: local-alpine-image
@@ -19,13 +26,6 @@ environment:
     ARCH: amd64
     RELEASE: focal
     TEST_FILE: ubuntu.sh
-  - DISTRO: amazonlinux
-    DISTRO_FILE: image-amazonlinux.yaml
-    IMAGE_NAME: local-amazon-image
-    CONTAINER_NAME: amazon
-    ARCH: x86_64
-    RELEASE: 2.0.20220606.1
-    TEST_FILE: amazonlinux.sh
 matrix:
   fast_finish: true
 install:
