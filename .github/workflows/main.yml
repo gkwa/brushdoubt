@@ -30,26 +30,25 @@ jobs:
         lxc image list
         sudo cat /etc/resolv.conf
         ping -c 1 google.com
+
     - name: Launch container
       run: |
         lxc launch $IMAGE_NAME $CONTAINER_NAME
 
+        lxc exec $CONTAINER_NAME -- /bin/sh -c 'echo search lxd >>/etc/resolv.conf'
         host_ip=$(lxd init --dump | grep ipv4.address | head -1 | cut -d: -f2 | tr -d ' ' | awk -F/ '{print $1}')
         echo $host_ip
-        lxc exec $CONTAINER_NAME -- /bin/sh -c 'echo search lxd >>/etc/resolv.conf'
         lxc exec $CONTAINER_NAME -- /bin/sh -c 'echo nameserver '$host_ip' >>/etc/resolv.conf'
 
-        lxc exec $CONTAINER_NAME -- /bin/sh -c 'ls -la'
         lxc exec $CONTAINER_NAME -- /bin/sh -c 'cat /etc/resolv.conf || true'
-        host_ip=$(lxd init --dump | grep ipv4.address | head -1 | cut -d: -f2 | tr -d ' ' | awk -F/ '{print $1}')
-        echo $host_ip
-        lxc exec $CONTAINER_NAME -- /bin/sh -c 'echo search lxd >>/etc/resolv.conf'
-        lxc exec $CONTAINER_NAME -- /bin/sh -c 'echo nameserver '$host_ip' >>/etc/resolv.conf'
+
     - name: Waiting for network
       run: |
-        lxc exec $CONTAINER_NAME -- /bin/sh -c 'cat /etc/resolv.conf'
-        lxc file push $TEST_FILE $CONTAINER_NAME/tmp/
-        lxc exec $CONTAINER_NAME -- /bin/sh -x /tmp/$TEST_FILE
+        lxc exec $CONTAINER_NAME -- timeout 2m /bin/sh -c 'echo waiting for network; until ping -c 1 google.com &>/dev/null; do sleep 1; done'
         lxc exec $CONTAINER_NAME -- /bin/sh -c 'ping -c 1 google.com'
         lxc exec $CONTAINER_NAME -- /bin/sh -c 'dig -t A google.com 8.8.8.8'
-        lxc exec $CONTAINER_NAME -- timeout 2m /bin/sh -c 'echo waiting for network; until ping -c 1 google.com &>/dev/null; do sleep 1; done'
+
+    - name: Invoke test
+      run: |
+        lxc file push $TEST_FILE $CONTAINER_NAME/tmp/
+        lxc exec $CONTAINER_NAME -- /bin/sh -x /tmp/$TEST_FILE

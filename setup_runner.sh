@@ -7,6 +7,7 @@ set -u
 sudo apt-get update >/dev/null
 sudo snap install distrobuilder --classic >/dev/null
 sudo apt-get -y install lxc debootstrap squashfs-tools awscli >/dev/null
+
 lxd init --auto
 lxd init --dump
 lxc profile show default
