@@ -13,6 +13,14 @@ env:
   TEST_FILE: amazonlinux.sh
 jobs:
   lxc:
+    strategy:
+      matrix:
+        DISTRO:
+        - amazonlinux
+        - ubuntu
+        - alpinelinux
+        version: [10, 12, 14]
+        os: [ubuntu-latest, windows-latest]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
