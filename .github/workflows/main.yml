@@ -32,6 +32,8 @@ jobs:
     - name: Launch container
       run: |
         sudo lxc launch $IMAGE_NAME $CONTAINER_NAME
+        sudo lxc exec $CONTAINER_NAME -- /bin/bash -c 'cat /etc/systemd/resolved.conf.d/dns_servers.conf || true'
+        sudo lxc exec $CONTAINER_NAME -- /bin/bash -c 'ls -la /etc/systemd/resolved.conf.d/dns_servers.conf || true'
         sudo lxc exec $CONTAINER_NAME -- /bin/bash -c 'ls -la .'
         sudo lxc exec $CONTAINER_NAME -- /bin/bash -c 'ls -la /etc'
         sudo lxc exec $CONTAINER_NAME -- /bin/bash -c 'mkdir -p /etc'
