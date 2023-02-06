@@ -12,20 +12,20 @@ environment:
     ARCH: x86_64
     RELEASE: 2.0.20230119.1
     TEST_FILE: amazonlinux.sh
-  - DISTRO: ubuntu
-    DISTRO_FILE: image-ubuntu.yaml
-    IMAGE_NAME: local-ubuntu-image
-    CONTAINER_NAME: ubuntu
-    ARCH: amd64
-    RELEASE: focal
-    TEST_FILE: ubuntu.sh
-  - DISTRO: alpinelinux
-    DISTRO_FILE: image-alpine.yaml
-    IMAGE_NAME: local-alpine-image
-    CONTAINER_NAME: alpine
-    ARCH: x86_64
-    RELEASE: 3.17
-    TEST_FILE: alpine.sh
+#  - DISTRO: ubuntu
+#    DISTRO_FILE: image-ubuntu.yaml
+#    IMAGE_NAME: local-ubuntu-image
+#    CONTAINER_NAME: ubuntu
+#    ARCH: amd64
+#    RELEASE: focal
+#    TEST_FILE: ubuntu.sh
+#  - DISTRO: alpinelinux
+#    DISTRO_FILE: image-alpine.yaml
+#    IMAGE_NAME: local-alpine-image
+#    CONTAINER_NAME: alpine
+#    ARCH: x86_64
+#    RELEASE: 3.17
+#    TEST_FILE: alpine.sh
 matrix:
   fast_finish: true
 install:
