@@ -35,7 +35,7 @@ install:
 - sudo distrobuilder build-lxd $DISTRO_FILE -o image.architecture=$ARCH -o image.release=$RELEASE
 - lxc image import lxd.tar.xz rootfs.squashfs --alias $IMAGE_NAME
 - lxc image list
-- lxc launch $IMAGE_NAME $CONTAINER_NAME
+- lxc launch $IMAGE_NAME $CONTAINER_NAME --vm
 - lxc exec $CONTAINER_NAME -- /bin/sh -c 'ls -la'
 - lxc exec $CONTAINER_NAME -- /bin/sh -c 'cat /etc/resolv.conf || true'
 - |
