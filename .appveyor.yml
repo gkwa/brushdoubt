@@ -40,10 +40,12 @@ install:
 - ping -c 1 google.com
 - lxc launch $IMAGE_NAME $CONTAINER_NAME
 - lxc exec $CONTAINER_NAME -- /bin/sh -c 'ls -la'
+- lxc exec $CONTAINER_NAME -- /bin/sh -c 'touch /etc/resolv.conf'
 - lxc exec $CONTAINER_NAME -- /bin/sh -c 'cat /etc/resolv.conf'
-- lxc exec $CONTAINER_NAME -- /bin/sh -c 'echo search lxd >>/etc/resolv.conf'
 - |
     host_ip=$(lxd init --dump | grep ipv4.address | head -1 | cut -d: -f2 | tr -d ' ' | awk -F/ '{print $1}')
+    echo $host_ip
+    lxc exec $CONTAINER_NAME -- /bin/sh -c 'echo search lxd >>/etc/resolv.conf'
     lxc exec $CONTAINER_NAME -- /bin/sh -c 'echo nameserver '$host_ip' >>/etc/resolv.conf'
 - lxc exec $CONTAINER_NAME -- /bin/sh -c 'cat /etc/resolv.conf'
 - lxc exec $CONTAINER_NAME -- /bin/sh -c 'apk add --update bind-tools iputils'
