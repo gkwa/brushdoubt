@@ -34,6 +34,7 @@ jobs:
         dig -t A google.com 8.8.8.8
         host_ip=$(lxd init --dump | grep ipv4.address | head -1 | cut -d: -f2 | tr -d ' ' | awk -F/ '{print $1}')
         echo $host_ip
+        lxc profile show default
         lxc launch $IMAGE_NAME $CONTAINER_NAME
         lxc exec $CONTAINER_NAME -- /bin/bash -c 'yum -y install bind-utils'
         lxc exec $CONTAINER_NAME -- /bin/bash -c 'host google.com'
