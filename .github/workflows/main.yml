@@ -9,7 +9,7 @@ env:
   IMAGE_NAME: local-amazon-image
   CONTAINER_NAME: amazon
   ARCH: x86_64
-  RELEASE: 2.0.20220606.1
+  RELEASE: 2.0.20230119.1
   TEST_FILE: amazonlinux.sh
 jobs:
   lxc:
@@ -33,6 +33,7 @@ jobs:
       run: |
         sudo lxc launch $IMAGE_NAME $CONTAINER_NAME
 
+        sudo lxc exec $CONTAINER_NAME -- /bin/sh -c 'mkdir -p /etc'
         sudo lxc exec $CONTAINER_NAME -- /bin/sh -c 'echo search lxd >>/etc/resolv.conf'
         host_ip=$(lxd init --dump | grep ipv4.address | head -1 | cut -d: -f2 | tr -d ' ' | awk -F/ '{print $1}')
         echo $host_ip
