@@ -20,6 +20,6 @@ lxc image list
 #lxc image list images: 
 lxc profile show default
 
-ping -c 1 google.com
+ping -c 1 github.com
 
 sudo cat /etc/resolv.conf
