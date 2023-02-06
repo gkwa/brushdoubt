@@ -32,22 +32,22 @@ jobs:
     - name: Launch container
       run: |
         sudo lxc launch $IMAGE_NAME $CONTAINER_NAME
-        sudo lxc exec $CONTAINER_NAME -- /bin/sh -c 'ls -la .'
-        sudo lxc exec $CONTAINER_NAME -- /bin/sh -c 'ls -la /etc'
-        sudo lxc exec $CONTAINER_NAME -- /bin/sh -c 'mkdir -p /etc'
-        sudo lxc exec $CONTAINER_NAME -- /bin/sh -c 'echo search lxd >>/etc/resolv.conf'
+        sudo lxc exec $CONTAINER_NAME -- /bin/bash -c 'ls -la .'
+        sudo lxc exec $CONTAINER_NAME -- /bin/bash -c 'ls -la /etc'
+        sudo lxc exec $CONTAINER_NAME -- /bin/bash -c 'mkdir -p /etc'
+        sudo lxc exec $CONTAINER_NAME -- /bin/bash -c 'echo search lxd >>/run/systemd/resolve/resolv.conf'
         host_ip=$(lxd init --dump | grep ipv4.address | head -1 | cut -d: -f2 | tr -d ' ' | awk -F/ '{print $1}')
         echo $host_ip
-        sudo lxc exec $CONTAINER_NAME -- /bin/sh -c 'echo nameserver 8.8.8.8 >>/etc/resolv.conf'
-        sudo lxc exec $CONTAINER_NAME -- /bin/sh -c 'cat /etc/resolv.conf || true'
+        sudo lxc exec $CONTAINER_NAME -- /bin/bash -c 'echo nameserver 8.8.8.8 >>/etc/resolv.conf'
+        sudo lxc exec $CONTAINER_NAME -- /bin/bash -c 'cat /etc/resolv.conf || true'
 
     - name: Waiting for network
       run: |
-        sudo lxc exec $CONTAINER_NAME -- timeout 2m /bin/sh -c 'echo waiting for network; until ping -c 1 google.com &>/dev/null; do sleep 1; done'
-        sudo lxc exec $CONTAINER_NAME -- /bin/sh -c 'ping -c 1 google.com'
-        sudo lxc exec $CONTAINER_NAME -- /bin/sh -c 'dig -t A google.com 8.8.8.8'
+        sudo lxc exec $CONTAINER_NAME -- timeout 2m /bin/bash -c 'echo waiting for network; until ping -c 1 google.com &>/dev/null; do sleep 1; done'
+        sudo lxc exec $CONTAINER_NAME -- /bin/bash -c 'ping -c 1 google.com'
+        sudo lxc exec $CONTAINER_NAME -- /bin/bash -c 'dig -t A google.com 8.8.8.8'
 
     - name: Invoke test
       run: |
         sudo lxc file push $TEST_FILE $CONTAINER_NAME/tmp/
-        sudo lxc exec $CONTAINER_NAME -- /bin/sh -x /tmp/$TEST_FILE
+        sudo lxc exec $CONTAINER_NAME -- /bin/bash -x /tmp/$TEST_FILE
