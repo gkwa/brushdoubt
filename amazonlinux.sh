@@ -5,4 +5,4 @@ set -e
 set -u
 
 yum -y install iputils
-yum -y install bind-tools
+yum -y install bind-utils
