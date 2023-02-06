@@ -36,10 +36,11 @@ jobs:
         echo $host_ip
         lxc profile show default
         cat /etc/lxc/default.conf
+        lxc launch $IMAGE_NAME $CONTAINER_NAME
         lxc profile create nicnet
         ip a
-        lxc launch $IMAGE_NAME $CONTAINER_NAME
-        lxc config device add $CONTAINER_NAME eth0 nic nictype=bridged parent=br0
+#        lxc config device add $CONTAINER_NAME eth0 nic nictype=bridged parent=br0
+        lxc profile add $CONTAINER_NAME nicnet
         lxc exec $CONTAINER_NAME -- /bin/bash -c 'yum -y install bind-utils'
         lxc exec $CONTAINER_NAME -- /bin/bash -c 'host google.com'
         lxc exec $CONTAINER_NAME -- /bin/bash -c 'dig -t A google.com 8.8.8.8'
