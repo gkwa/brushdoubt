@@ -27,7 +27,7 @@ environment:
     RELEASE: 3.17
     TEST_FILE: alpine.sh
 matrix:
-  fast_finish: false
+  fast_finish: true
 install:
 - sudo ./setup_runner.sh
 - echo DISTRO=$DISTRO CONTAINER_NAME=$CONTAINER_NAME DISTRO_FILE=$DISTRO_FILE ARCH=$ARCH
