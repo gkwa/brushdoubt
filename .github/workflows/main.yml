@@ -3,6 +3,14 @@ name: CI
   push: null
   schedule:
   - cron: 01 13 * * SAT
+env:
+  DISTRO: amazonlinux
+  DISTRO_FILE: image-amazonlinux.yaml
+  IMAGE_NAME: local-amazon-image
+  CONTAINER_NAME: amazon
+  ARCH: x86_64
+  RELEASE: 2.0.20220606.1
+  TEST_FILE: amazonlinux.sh
 jobs:
   lxc:
     runs-on: ubuntu-latest
@@ -13,19 +21,42 @@ jobs:
         lxd_version: latest/stable
     - name: Install distrobuilder
       run: |
+        sudo apt-get update >/dev/null
         sudo apt-get -y install lxc debootstrap squashfs-tools awscli >/dev/null
         sudo snap install distrobuilder --classic
         distrobuilder --version
         lxc image list # local images
         lxc image list images: # public images
+        lxc profile show default
+        echo DISTRO=$DISTRO CONTAINER_NAME=$CONTAINER_NAME DISTRO_FILE=$DISTRO_FILE ARCH=$ARCH
+
+        rm -f lxd.tar.xz rootfs.squashfs
+        sudo distrobuilder build-lxd $DISTRO_FILE -o image.architecture=$ARCH -o image.release=$RELEASE
+        lxc image import lxd.tar.xz rootfs.squashfs --alias $IMAGE_NAME
+        lxc image list
+        sudo cat /etc/resolv.conf
+        ping -c 1 google.com
+
+
     - name: Launch container
       run: |
-        sudo distrobuilder build-lxd amazonlinux.yaml -o image.architecture=amd64 -o image.release=focal
-        lxd init --auto
-        lxd init --dump
-        lxc image import lxd.tar.xz rootfs.squashfs --alias my-local-image
-        lxc image list
-        time lxc launch my-local-image mycontainer
+
+        lxc launch $IMAGE_NAME $CONTAINER_NAME
+        lxc exec $CONTAINER_NAME -- /bin/sh -c 'ls -la'
+        lxc exec $CONTAINER_NAME -- /bin/sh -c 'cat /etc/resolv.conf || true'
+
+        host_ip=$(lxd init --dump | grep ipv4.address | head -1 | cut -d: -f2 | tr -d ' ' | awk -F/ '{print $1}')
+        echo $host_ip
+        lxc exec $CONTAINER_NAME -- /bin/sh -c 'echo search lxd >>/etc/resolv.conf'
+        lxc exec $CONTAINER_NAME -- /bin/sh -c 'echo nameserver '$host_ip' >>/etc/resolv.conf'
+
+
     - name: Waiting for network
       run: |
-        lxc exec mycontainer -- timeout 2m bash -c 'echo waiting for newtork; until ping -c 1 google.com &>/dev/null; do sleep 1; done'
+
+        lxc exec $CONTAINER_NAME -- /bin/sh -c 'cat /etc/resolv.conf'
+        lxc file push $TEST_FILE $CONTAINER_NAME/tmp/
+        lxc exec $CONTAINER_NAME -- /bin/sh -x /tmp/$TEST_FILE
+        lxc exec $CONTAINER_NAME -- /bin/sh -c 'ping -c 1 google.com'
+        lxc exec $CONTAINER_NAME -- /bin/sh -c 'dig -t A google.com 8.8.8.8'
+        lxc exec $CONTAINER_NAME -- timeout 2m /bin/sh -c 'echo waiting for newtork; until ping -c 1 google.com &>/dev/null; do sleep 1; done'
