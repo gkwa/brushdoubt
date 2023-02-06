@@ -20,7 +20,7 @@ environment:
     RELEASE: focal
     TEST_FILE: ubuntu.sh
   - DISTRO: alpinelinux
-    DISTRO_FILE: alpine.yaml
+    DISTRO_FILE: image-alpine.yaml
     IMAGE_NAME: local-alpine-image
     CONTAINER_NAME: alpine
     ARCH: x86_64
