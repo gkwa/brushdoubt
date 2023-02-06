@@ -35,6 +35,7 @@ jobs:
         host_ip=$(lxd init --dump | grep ipv4.address | head -1 | cut -d: -f2 | tr -d ' ' | awk -F/ '{print $1}')
         echo $host_ip
         lxc profile show default
+        cat /etc/lxc/default.conf
         lxc config device add $CONTAINER_NAME eth0 nic nictype=bridged parent=br0
         lxc launch $IMAGE_NAME $CONTAINER_NAME
         lxc exec $CONTAINER_NAME -- /bin/bash -c 'yum -y install bind-utils'
