@@ -36,7 +36,7 @@ jobs:
         echo $host_ip
         lxc profile show default
         cat /etc/lxc/default.conf
-        lxc launch $IMAGE_NAME $CONTAINER_NAME
+        lxc launch $IMAGE_NAME $CONTAINER_NAME -c security.privileged=true
         lxc profile create nicnet
         ip a
         #lxc config device add $CONTAINER_NAME eth0 nic nictype=bridged parent=br0
