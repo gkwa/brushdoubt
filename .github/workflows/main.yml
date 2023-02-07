@@ -39,7 +39,7 @@ jobs:
         lxc launch $IMAGE_NAME $CONTAINER_NAME
         lxc profile create nicnet
         ip a
-#        lxc config device add $CONTAINER_NAME eth0 nic nictype=bridged parent=br0
+        #lxc config device add $CONTAINER_NAME eth0 nic nictype=bridged parent=br0
         lxc profile add $CONTAINER_NAME nicnet
         lxc stop -n $CONTAINER_NAME -r
         lxc exec $CONTAINER_NAME -- /bin/bash -c 'yum -y install bind-utils'
