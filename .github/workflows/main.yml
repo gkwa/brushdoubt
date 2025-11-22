@@ -15,7 +15,7 @@ jobs:
   lxc:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
     - uses: whywaita/setup-lxd@v1
       with:
         lxd_version: latest/stable
